@@ -1,27 +1,28 @@
 package config
 
 import (
-	"log"
 	"os"
 
 	"github.com/joho/godotenv"
 )
 
-// Config ...
+// Config stores the Harvest account ID and token that
+// are loaded to the environment from the .env file.
 type Config struct {
 	HarvestAccountID string
 	HarvestToken     string
 }
 
-// New ...
-func New(envPath string) Config {
+// New loads the env vars from the .env file and returns
+// a Config pointer with the Harvest account ID and token.
+func New(envPath string) (*Config, error) {
 	err := godotenv.Load()
 	if err != nil {
-		log.Fatalln("Error loading .env file")
+		return nil, err
 	}
 
-	return Config{
+	return &Config{
 		HarvestAccountID: os.Getenv("HARVEST_ACCOUNT_ID"),
 		HarvestToken:     os.Getenv("HARVEST_TOKEN"),
-	}
+	}, nil
 }
