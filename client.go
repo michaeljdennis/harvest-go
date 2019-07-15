@@ -5,7 +5,6 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-	"strings"
 
 	"github.com/michaeljdennis/harvest-go/endpoint"
 )
@@ -57,9 +56,8 @@ func (ac APIClient) Get(e endpoint.Endpointer, m interface{}) error {
 	if err != nil {
 		return err
 	}
-	bodyStr := string(body)
 
-	err = json.NewDecoder(strings.NewReader(bodyStr)).Decode(&m)
+	err = json.Unmarshal(body, &m)
 	if err != nil {
 		return err
 	}
