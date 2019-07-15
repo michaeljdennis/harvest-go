@@ -20,20 +20,6 @@ type UsersModel struct {
 	Users []UserModel `json:"users"`
 }
 
-// Me ...
-type Me struct {
-	*Endpoint
-}
-
-// NewMe returns new Me
-func NewMe() *Me {
-	return &Me{
-		Endpoint: NewEndpoint(
-			"users/me",
-		),
-	}
-}
-
 // UserModel ...
 type UserModel struct {
 	// BaseModel

@@ -3,25 +3,32 @@ package main
 import (
 	"log"
 
-	"github.com/michaeljdennis/harvest-go/client"
-	"github.com/michaeljdennis/harvest-go/config"
+	"github.com/michaeljdennis/harvest-go"
 	"github.com/michaeljdennis/harvest-go/endpoint"
 )
 
 func main() {
-	config, err := config.New("./.env")
+	var err error
+
+	config, err := harvest.NewConfig("../.env")
 	if err != nil {
 		log.Fatalln(err)
 	}
-	client := client.New(config)
+	client := harvest.NewClient(config)
 
 	// usersEndpoint := endpoint.NewUsers()
 	// users := &endpoint.UsersModel{}
-	// client.Get(usersEndpoint, users)
+	// err = client.Get(usersEndpoint, users)
+	// if err != nil {
+	// 	log.Fatalln(err)
+	// }
 	// endpoint.PrintModel(users)
 
 	meEndpoint := endpoint.NewMe()
 	me := &endpoint.UserModel{}
-	client.Get(meEndpoint, me)
+	err = client.Get(meEndpoint, me)
+	if err != nil {
+		log.Fatalln(err)
+	}
 	endpoint.PrintModel(me)
 }

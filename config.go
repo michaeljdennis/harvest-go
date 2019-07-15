@@ -1,4 +1,4 @@
-package config
+package harvest
 
 import (
 	"os"
@@ -13,10 +13,10 @@ type Config struct {
 	HarvestToken     string
 }
 
-// New loads the env vars from the .env file and returns
+// NewConfig loads the env vars from the .env file and returns
 // a Config pointer with the Harvest account ID and token.
-func New(envPath string) (*Config, error) {
-	err := godotenv.Load()
+func NewConfig(envPath string) (*Config, error) {
+	err := godotenv.Load(envPath)
 	if err != nil {
 		return nil, err
 	}

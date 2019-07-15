@@ -1,4 +1,4 @@
-package client
+package harvest
 
 import (
 	"encoding/json"
@@ -7,23 +7,24 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/michaeljdennis/harvest-go/config"
 	"github.com/michaeljdennis/harvest-go/endpoint"
 )
 
-// APIClient ...
+// APIClient embeds an http.Client and has a pointer to Config.
 type APIClient struct {
 	http.Client
-	Config *config.Config
+	Config *Config
 }
 
-// New returns a pointer to a new APIClient.
-func New(config *config.Config) *APIClient {
+// NewClient returns a pointer to a new APIClient.
+func NewClient(config *Config) *APIClient {
 	return &APIClient{
 		Config: config,
 	}
 }
 
+// createRequest returns an pointer to an http.Request with
+// the appropriate authentication headers set.
 func (ac APIClient) createRequest(method string, url string, body io.Reader) (*http.Request, error) {
 	// Create request
 	req, err := http.NewRequest(method, url, body)
